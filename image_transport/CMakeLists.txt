@@ -9,6 +9,7 @@ find_package(catkin REQUIRED
     roscpp
     roslib
     sensor_msgs
+    std_srvs
 )
 
 find_package(Boost REQUIRED)
@@ -16,7 +17,7 @@ find_package(Boost REQUIRED)
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}
-  DEPENDS message_filters pluginlib rosconsole roscpp roslib sensor_msgs
+  DEPENDS message_filters pluginlib rosconsole roscpp roslib sensor_msgs std_srvs
 )
 
 include_directories(include ${catkin_INCLUDE_DIRS})
@@ -49,9 +50,13 @@ install(DIRECTORY include/${PROJECT_NAME}/
         DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
 )
 
-# add two execs
+# add three execs
 add_executable(republish src/republish.cpp)
 target_link_libraries(republish ${PROJECT_NAME})
+
+# add three execs
+add_executable(republish_toggle src/republish_toggle.cpp)
+target_link_libraries(republish_toggle ${PROJECT_NAME})
 
 add_executable(list_transports src/list_transports.cpp)
 target_link_libraries(list_transports
@@ -59,7 +64,7 @@ target_link_libraries(list_transports
   ${catkin_LIBRARIES}
 )
 
-install(TARGETS list_transports republish
+install(TARGETS list_transports republish republish_toggle
         DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
